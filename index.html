@@ -1,64 +1,49 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en-us">
+
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://libs.zappar.com/zappar-aframe/2.0.0/zappar-aframe.js"></script>
+    <script src="https://player.8i.com/release/latest/volcap-player.js"></script>
 
-    <!-- Zappar Splash Screen Useful Package -->
-    <script defer src="https://libs.zappar.com/zappar-splash/0.0.0-rc.1/zappar-splash.js"></script>
-
-    <!-- Learn more about Arcturus' HoloStream Web API  -->
-    <!-- https://arcturus.studio/docs/holostream/en/v2021.1/html/Holostream_API/api.html -->
-    <script src="https://static.holostream.arcturus.studio/release/2021.1.5/remote/HoloStream-2021.1.5.min.js"></script>
-
-    <meta charset="utf-8" />
-    <title>Zappar for A-Frame & Arcturus: Volumetric Video Example</title>
-
-    <!-- Styles -->
-    <link rel="stylesheet" type="text/css" href="https://static.holostream.arcturus.studio/release/2021.1.5/remote/holostream-2021.1.5.css">
-    <link rel="stylesheet" href="style.css" />
-
-    <!-- Load in our components as a matter of urgency -->
-    <script src="components.js"></script>
+    <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
 </head>
 
 <body>
-    <a-scene id="zappar-scene" loading-screen="backgroundColor: #e9f3fd" shadow="type: pcfsoft" light="defaultLightsEnabled: false" style="display: none">
-        <!-- Load up any assets we may need -->
+    <a-scene id="player" webxr shadow="type: pcfsoft" >
         <a-assets>
-            <img id="hotspotTexture" src="./assets/hotspot.png">
+            <!-- <img id="floor" src="/floor_default.jpg"> -->
         </a-assets>
-
-        <!-- shows a full-page dialog that informs the user they're using an unsupported browser -->
-        <a-entity zappar-compatibility-ui id="compatibility"></a-entity>
-
-        <!-- Set up our zappar-camera -->
-        <a-camera id="camera" zappar-camera />
-
-        <!-- Add some ambient lighting -->
-        <a-entity light="type: ambient;"></a-entity>
-
-        <!-- Setup our instant tracker and start it in placement mode so the user can -->
-        <!-- choose a location for the object -->
-        <a-entity id="instant-tracker" zappar-instant="placement-mode: true; anchorPoseOffset: 0 -1.5 -6;">
-             <!-- Include a volumetric video inside our instant tracker -->
-             <holostream-entity id="holo" src="https://holostream-dev.arcturus.studio/media/23f517e8-a10e-48ae-bc76-8ccde959937d/stream/dash/manifest.mpd"></holostream-entity>
-             
-             <!-- Include a hotspot which will give users an idea where they are placing content -->
-             <a-entity id="hotspot" geometry="primitive:plane;" scale="2 2 2" position="0 0.001 0" rotation="-90 0 0" material="src: #hotspotTexture; transparent: true; alphaTest: 0.5"></a-entity>
-             
-             <!-- Include a plane which will receive shadows -->
-             <a-entity id="shadowPlane" geometry="primitive:plane; width: 10; height: 10" material="color: red; side:double"  rotation="-90 0 0" shadow="receive: true" shadow-material ></a-entity>
-             
-             <!-- Include a light source to cast shadows -->
-              <a-entity id="dirLight" light="type: directional; castShadow: true" position="0 30 0" shadow-opts  ></a-entity>
+        <a-light type="ambient" intensity="0"></a-light>
+        <a-entity light="type: spot;
+                 intensity: 10;
+                 castShadow: true;
+                 shadowMapHeight:2048;
+                 shadowMapWidth:2048;
+                 shadowCameraFar: 5000;
+                 shadowCameraFov: 20;
+                 penumbra: 0.4;" position="1.25 10 1.25" rotation="-90 0 0" shadow>
         </a-entity>
+
+        <a-entity id="hologram"
+            hologram="src: https://assets.8i.com/st01pro20200929_S01_T09_20201020_100808/manifest.mpd; loop: true;"
+            visible="false"
+            class="cantap"
+            eightiControlsComponent
+            >
+        </a-entity>
+
+        <a-plane id="ground" width="40" height="40" position="0 0 0" rotation="-90 0 0" shadow="receive: true"
+            material="color: #ffffff; opacity: 0.0; transparent: true; roughness: 1;" class="cantap"></a-plane>
+        
+        <a-camera 
+            orbit-controls="target: 0 1.2 0; minDistance: 0.5; maxDistance: 180; initialPosition: -0.25 1.6 2">
+        </a-camera>
     </a-scene>
-
-    <!-- Some UI for the user to tap to indicate they're happy with the placement -->
-    <div id="zappar-placement-ui" class="noselect">Tap here to place</div>
-
-    <script src="index.js"></script>
+    <script src="https://unpkg.com/aframe-orbit-controls@1.3.0/dist/aframe-orbit-controls.min.js"></script>
 </body>
-
 </html>
