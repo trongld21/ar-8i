@@ -11,13 +11,12 @@
     <script src="https://player.8i.com/release/latest/volcap-player.js"></script>
 
     <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
-    <script src="./components.js"></script>
 </head>
 
 <body>
     <a-scene id="player" webxr shadow="type: pcfsoft" arjs>
         <a-assets>
-            <!-- <img id="floor" src="/floor_default.jpg"> -->
+            <img id="floor" src="/floor_default.jpg">
         </a-assets>
         <a-light type="ambient" intensity="0"></a-light>
         <a-entity light="type: spot;
@@ -32,17 +31,17 @@
 
         <a-entity id="hologram"
             hologram="src: https://assets.8i.com/st01pro20200929_S01_T09_20201020_100808/manifest.mpd; loop: true;"
-            class="cantap"
             
+            class="cantap"
             >
         </a-entity>
 
-        <a-plane id="ground" width="40" height="40" position="0 0 0" rotation="-90 0 0" shadow="receive: true"
+        <a-plane width="40" height="40" position="0 0 0" rotation="-90 0 0" shadow="receive: true"
             material="color: #ffffff; opacity: 0.0; transparent: true; roughness: 1;" class="cantap"></a-plane>
         
-        <a-camera 
+        <a-entity camera
             orbit-controls="target: 0 1.2 0; minDistance: 0.5; maxDistance: 180; initialPosition: -0.25 1.6 2">
-        </a-camera>
+        </a-entity>
     </a-scene>
     <script src="https://unpkg.com/aframe-orbit-controls@1.3.0/dist/aframe-orbit-controls.min.js"></script>
 </body>
