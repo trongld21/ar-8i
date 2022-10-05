@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <a-scene id="player" webxr shadow="type: pcfsoft" >
+    <a-scene id="player" webxr shadow="type: pcfsoft" arjs>
         <a-assets>
             <!-- <img id="floor" src="/floor_default.jpg"> -->
         </a-assets>
@@ -31,9 +31,8 @@
 
         <a-entity id="hologram"
             hologram="src: https://assets.8i.com/st01pro20200929_S01_T09_20201020_100808/manifest.mpd; loop: true;"
-            visible="false"
             class="cantap"
-            eightiControlsComponent
+            
             >
         </a-entity>
 
